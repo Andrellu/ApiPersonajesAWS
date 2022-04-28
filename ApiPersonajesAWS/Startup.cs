@@ -33,6 +33,8 @@ namespace ApiPersonajesAWS
             services.AddTransient<RepositoryPersonajes>();
             services.AddDbContext<PersonajesContext>(options => options.UseMySql(cadena, ServerVersion.AutoDetect(cadena)));
 
+            services.AddCors(options => options.AddPolicy("AllowOrigin", x => x.AllowAnyOrigin()));
+
             services.AddControllers();
             services.AddSwaggerGen(c =>
             {
@@ -47,6 +49,9 @@ namespace ApiPersonajesAWS
             {
                 app.UseDeveloperExceptionPage();
             }
+
+            app.UseCors(options => options.AllowAnyOrigin());
+            
             app.UseSwagger();
             app.UseSwaggerUI( c =>{
                 c.SwaggerEndpoint("/swagger/v1/swagger.json", "ApiPersonajesAWS v1");
